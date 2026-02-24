@@ -46,6 +46,13 @@ def show_students(students):
     print("\n These are the students:- ")
     print(df)
 
+def edit_students(students):
+    if len(students) == 0:
+        print("No Student found, please add the student")
+        return
+    
+
+
 def main():
     students1 = []
     while True:
