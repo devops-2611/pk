@@ -19,7 +19,7 @@ def add_student(students):
         student = {
             "id" : stu_id,
             "name" : name,
-            "no of subs" : no_subs
+            "no_of_subs" : no_subs
         }
         tot_marks = []
         for j in range(no_subs):
@@ -50,7 +50,9 @@ def edit_students(students):
     if len(students) == 0:
         print("No Student found, please add the student")
         return
-    
+    df = pd.DataFrame(students)
+    cols = df.columns
+
 
 
 def main():
