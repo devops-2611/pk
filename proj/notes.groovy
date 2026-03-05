@@ -85,6 +85,15 @@ docker build -t sharmarjit1986/sbe:v1 .
 docker build --no-cache -t sharmarjit1986/sbe:v1 .
 docker push sharmarjit1986/sbe:v1
 
+
+docker build --no-cache -t sharmarjit1986/sbe:v1 /home/sharma/work/python_terra/to_gitlab/pk/proj/student-management-system/backend
+docker build --no-cache -t sharmarjit1986/sfe:v1 /home/sharma/work/python_terra/to_gitlab/pk/proj/student-management-system/frontend
+
+docker push sharmarjit1986/sbe:v1
+docker push sharmarjit1986/sfe:v1
+
+
+
 docker build -t sharmarjit1986/sfe:v1 .
 docker push sharmarjit1986/sfe:v1
 
@@ -107,6 +116,9 @@ docker run -d --name sfe -p 4173:4173 --env-file ../frontend/.env sharmarjit1986
 docker rm -f sbe sfe
 docker run -d --name sbe --network vishal -p 5000:5000 --env-file backend/.env sharmarjit1986/sbe:v1
 docker run -d --name sfe --network vishal -p 4173:4173 --env-file frontend/.env sharmarjit1986/sfe:v1
+
+docker run -d --name sbe --network vishal -p 5000:5000 sharmarjit1986/sbe:v1
+docker run -d --name sfe --network vishal -p 4173:4173 sharmarjit1986/sfe:v1
 
 
 docker rm -f sfe sbe
