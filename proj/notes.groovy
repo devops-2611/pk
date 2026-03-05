@@ -81,11 +81,38 @@ docker info
 docker login -u sharmarjit1986
 dckr_pat_r0FQI1Gk8Mvt97B96aI1bneQ-6g
 
-docker build - t sharmarjit1986/student-backend :v1.
-docker push sharmarjit1986/student-backend:v1
+docker build -t sharmarjit1986/sbe:v1 .
+docker build --no-cache -t sharmarjit1986/sbe:v1 .
+docker push sharmarjit1986/sbe:v1
+
+docker build -t sharmarjit1986/sfe:v1 .
+docker push sharmarjit1986/sfe:v1
+
+docker run -d -p 5000:5000 --env-file backend/.env yourdockerhub/backend:1.0
+
+docker run -d -p 5173:5173 yourdockerhub/frontend:1.0
+
+docker run -d --name sbe -p 5000:5000 --env-file backend/.env sharmarjit1986/sbe:v1
+docker run -d --name sfe -p 5173:5173 --env-file backend/.env sharmarjit1986/sfe:v1
+docker run -d --name sfe -p 5173:5173 --env-file ../frontend/.env sharmarjit1986/sfe:v1
 
 
+docker run -d --name sbe -p 5000:5000 sharmarjit1986/sbe:v1
+docker run -d --name sfe -p 4173:4173 --env-file .env sharmarjit1986/sfe:v1
 
+docker run -d --name sbe -p 5000:5000 --env-file ../backend/.env sharmarjit1986/sbe:v1
+docker run -d --name sfe -p 4173:4173 --env-file ../frontend/.env sharmarjit1986/sfe:v1
+
+
+docker rm -f sbe sfe
+docker run -d --name sbe --network vishal -p 5000:5000 --env-file backend/.env sharmarjit1986/sbe:v1
+docker run -d --name sfe --network vishal -p 4173:4173 --env-file frontend/.env sharmarjit1986/sfe:v1
+
+
+docker rm -f sfe sbe
+
+
+##############################################################
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
