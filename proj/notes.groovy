@@ -122,6 +122,7 @@ docker run -d --name sfe --network vishal -p 4173:4173 sharmarjit1986/sfe:v1
 
 
 docker rm -f sfe sbe
+docker rmi -f sharmarjit1986/sbe:v1 sharmarjit1986/sfe:v1
 
 
 ##############################################################

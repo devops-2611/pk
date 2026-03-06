@@ -3,3 +3,6 @@
 .terraform.tfstate.lock.info
 *.hcl
 *.tfstate
+.env
+node_modules
+node_module
