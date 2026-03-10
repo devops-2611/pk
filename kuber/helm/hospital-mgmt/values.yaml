@@ -1,0 +1,152 @@
+frontend:
+  image: careerdeveloper1/hp-fe
+  tag: v3
+  replicaCount: 1
+  servicePort: 8081
+  serviceType: NodePort
+  nodePort: 30008
+  containerPort: 80
+  imagePullPolicy: Always
+  imagePullSecrets: 
+  - dockerhub-secret
+  requests:
+    cpu: "400m"
+    memory: "400Mi"
+  limits:
+    memory: "500Mi"
+    cpu: "500m"
+  env:
+  - name: VITE_API_URL
+    valueFrom: 
+      configMapKeyRef:
+        name: hp-cm
+        key: VITE_API_URL
+
+# backend
+
+backend:
+  image: careerdeveloper1/hp-fe
+  tag: v3
+  replicaCount: 1
+  servicePort: 5000
+  containerPort: 5000
+  serviceType: NodePort
+  nodePort: 30009
+  imagePullPolicy: Always  
+  imagePullSecrets: 
+  - dockerhub-secret
+  requests:
+    cpu: "400m"
+    memory: "400Mi"
+  limits:
+    memory: "500Mi"
+    cpu: "500m"
+  env:
+  - name : PORT
+    valueFrom: 
+      configMapKeyRef:
+        name: hp-cm
+        key: PORT
+
+  - name : DB_HOST
+    valueFrom: 
+      configMapKeyRef:
+        name: hp-cm
+        key: DB_HOST
+
+  - name : DB_PORT
+    valueFrom: 
+      configMapKeyRef:
+        name: hp-cm
+        key: DB_PORT
+
+  - name : DB_USER
+    valueFrom: 
+      secretKeyRef:
+        name: hp-secret
+        key: DB_USER
+
+  - name : DB_PASSWORD
+    valueFrom: 
+      secretKeyRef:
+        name: hp-secret
+        key: DB_PASSWORD
+
+
+  - name : DB_NAME
+    valueFrom: 
+      secretKeyRef:
+        name: hp-secret
+        key: DB_NAME
+
+# databse
+
+database:
+  image: careerdeveloper1/hp-db
+  tag: v3
+  replicaCount: 1
+  servicePort: 3306
+  serviceType: NodePort
+  nodePort: 30010
+  containerPort: 3306
+  imagePullPolicy: Always
+  imagePullSecrets: 
+  - dockerhub-secret
+  requests:
+    cpu: "400m"
+    memory: "400Mi"
+  limits:
+    memory: "500Mi"
+    cpu: "500m"
+  env:
+  - name : MYSQL_USER
+    valueFrom: 
+      configMapKeyRef:
+        name: hp-cm
+        key: MYSQL_USER
+
+  - name : MYSQL_DATABASE
+    valueFrom: 
+      configMapKeyRef:
+        name: hp-cm
+        key: MYSQL_DATABASE
+
+  - name : DB_NAME
+    valueFrom: 
+      configMapKeyRef:
+        name: hp-cm
+        key: DB_NAME
+
+  - name : MYSQL_ROOT_PASSWORD
+    valueFrom: 
+      secretKeyRef:
+        name: hp-secret
+        key: MYSQL_ROOT_PASSWORD
+
+  - name : MYSQL_PASSWORD
+    valueFrom: 
+      secretKeyRef:
+        name: hp-secret
+        key: MYSQL_PASSWORD
+
+
+# config
+
+config:
+  PORT: "5000"
+  DB_HOST: "hp-db"
+  DB_PORT: "3306"
+  MYSQL_USER: "hp"
+  MYSQL_DATABASE: "hospitaldb" 
+  DB_NAME: "hospitaldb"
+  VITE_API_URL: "/api"
+  
+  
+# secet
+
+secret:
+  DB_USER: "cm9vdA=="
+  DB_PASSWORD: "cm9vdHBhc3M="
+  DB_NAME: "aG9zcGl0YWxkYg=="
+  MYSQL_ROOT_PASSWORD:  "cm9vdHBhc3M="
+  MYSQL_PASSWORD: "cm9vdHBhc3M="

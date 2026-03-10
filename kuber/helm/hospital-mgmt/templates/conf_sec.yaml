@@ -1,0 +1,36 @@
+# configmap
+
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: hp-cm
+  namespace: default
+data: 
+# backend non credential confingmap
+  PORT: "{{ .Values.config.PORT}}"
+  DB_HOST: "{{ .Values.config.DB_HOST}}"
+  DB_PORT: "{{ .Values.config.DB_PORT}}"
+  MYSQL_USER: "{{ .Values.config.MYSQL_USER}}"
+  MYSQL_DATABASE: "{{ .Values.config.MYSQL_DATABASE}}"
+  DB_NAME: "{{ .Values.config.DB_NAME}}"
+  VITE_API_URL: "{{ .Values.config.VITE_API_URL}}"
+
+
+
+---
+
+# secret
+
+apiVersion: v1
+kind: Secret
+metadata: 
+  name: hp-secret
+  namespace: default
+type: Opaque
+data: 
+# credential secret for backend
+  DB_USER: {{ .Values.secret.DB_USER | quote }}
+  DB_PASSWORD: {{ .Values.secret.DB_PASSWORD | quote }}
+  DB_NAME: {{ .Values.secret.DB_NAME | quote }}
+  MYSQL_ROOT_PASSWORD: {{ .Values.secret.MYSQL_ROOT_PASSWORD | quote }}
+  MYSQL_PASSWORD: {{ .Values.secret.MYSQL_PASSWORD | quote }}

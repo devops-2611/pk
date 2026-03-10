@@ -1,0 +1,38 @@
+mkdir -p terra_mod_vm_nat_nsg_doc/{MODULES/{RG,SA,CON,VNET,SNET,NIC,PIP,VM,NSG,NAMING,BAS,NAT,DOC},ENV/DEV}
+touch terra_mod_vm_nat_nsg_doc/MODULES/RG/{main.tf,variables.tf,outputs.tf}
+touch terra_mod_vm_nat_nsg_doc/MODULES/SA/{main.tf,variables.tf,outputs.tf}
+touch terra_mod_vm_nat_nsg_doc/MODULES/CON/{main.tf,variables.tf,outputs.tf}
+touch terra_mod_vm_nat_nsg_doc/MODULES/VNET/{main.tf,variables.tf,outputs.tf}
+touch terra_mod_vm_nat_nsg_doc/MODULES/SNET/{main.tf,variables.tf,outputs.tf}
+touch terra_mod_vm_nat_nsg_doc/MODULES/NIC/{main.tf,variables.tf,outputs.tf}
+touch terra_mod_vm_nat_nsg_doc/MODULES/PIP/{main.tf,variables.tf,outputs.tf}
+touch terra_mod_vm_nat_nsg_doc/MODULES/VM/{main.tf,variables.tf,outputs.tf}
+touch terra_mod_vm_nat_nsg_doc/MODULES/NSG/{main.tf,variables.tf,outputs.tf}
+touch terra_mod_vm_nat_nsg_doc/MODULES/NAMING/{main.tf,outputs.tf}
+touch terra_mod_vm_nat_nsg_doc/MODULES/BAS/{main.tf,outputs.tf,variables.tf}
+touch terra_mod_vm_nat_nsg_doc/MODULES/NAT/{main.tf,outputs.tf,variables.tf}
+touch terra_mod_vm_nat_nsg_doc/MODULES/DOC/{main.tf,outputs.tf,variables.tf}
+touch terra_mod_vm_nat_nsg_doc/ENV/DEV/{main.tf,variables.tf,terraform.tfvars,providers.tf,versions.tf}
+
+
+mkdir -p MODULES/{vnet,snet,nic,vm,pip}
+touch MODULES/vnet/{main.tf,variables.tf,outputs.tf}
+touch MODULES/snet/{main.tf,variables.tf,outputs.tf}
+touch MODULES/nic/{main.tf,variables.tf,outputs.tf}
+touch MODULES/vm/{main.tf,variables.tf,outputs.tf}
+touch MODULES/pip/{main.tf,variables.tf,outputs.tf}
+touch MODULES/NAT/{main.tf,variables.tf,outputs.tf}
+
+
+
+
+mkdir -p terraform_acr/{MODULES/{RG,ACR},ENV/DEV}
+touch terraform_acr/MODULES/RG/{main.tf,variables.tf,outputs.tf}
+touch terraform_acr/MODULES/ACR/{main.tf,variables.tf,outputs.tf}
+touch terraform_acr/ENV/DEV/{main.tf,variables.tf,terraform.tfvars,providers.tf,versions.tf}
+
+
+mkdir -p terraform_key_vault/{MODULES/{RG,KV},ENV/DEV}
+touch terraform_key_vault/MODULES/RG/{main.tf,variables.tf,outputs.tf}
+touch terraform_key_vault/MODULES/KV/{main.tf,variables.tf,outputs.tf}
+touch terraform_key_vault/ENV/DEV/{main.tf,variables.tf,terraform.tfvars,providers.tf,versions.tf}

@@ -1,0 +1,144 @@
+---
+# Source: two-tier-app/templates/backend.yaml
+# service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+
+spec:
+  type: NodePort
+
+  selector:
+    app: backend
+
+  ports:
+    - port: 5000
+      targetPort: 5000
+      nodePort: 30009
+---
+# Source: two-tier-app/templates/frontend.yaml
+# service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  type: NodePort
+
+  selector:
+    app: frontend
+
+  ports:
+    - port: 4173
+      targetPort: 4173
+      nodePort: 30008
+---
+# Source: two-tier-app/templates/backend.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: backend
+
+  template:
+    metadata:
+      labels:
+        app: backend
+
+    spec:
+      imagePullSecrets:
+        - name: dockerhub-secret
+
+      containers:
+        - name: backend
+          image: "sharmarjit1986/sbe:v1"
+
+          ports:
+            - containerPort: 5000
+
+          resources:
+            requests:
+              cpu: 400m
+              memory: 400Mi
+            limits:
+              cpu: 500m
+              memory: 500Mi
+
+          env:
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_NAME
+                  name: kuber-config
+            - name: COLLECTION_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: COLLECTION_NAME
+                  name: kuber-config
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: PORT
+                  name: kuber-config
+            - name: VITE_BACKEND_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: VITE_BACKEND_URL
+                  name: kuber-config
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  key: MONGO_URI
+                  name: kuber-secret
+---
+# Source: two-tier-app/templates/frontend.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: frontend
+
+  template:
+    metadata:
+      labels:
+        app: frontend
+
+    spec:
+      imagePullSecrets:
+        - name: dockerhub-secret
+
+      containers:
+        - name: frontend
+          image: "sharmarjit1986/sfe:v1"
+
+          ports:
+            - containerPort: 4173
+
+          resources:
+            requests:
+              cpu: 400m
+              memory: 400Mi
+            limits:
+              cpu: 500m
+              memory: 500Mi
+
+          env:
+            - name: VITE_BACKEND_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: VITE_BACKEND_URL
+                  name: kuber-config

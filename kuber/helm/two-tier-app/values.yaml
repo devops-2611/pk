@@ -1,0 +1,68 @@
+frontend:
+  image: sharmarjit1986/sfe
+  tag: v1
+  replicaCount: 1
+  servicePort: 4173
+  serviceType: NodePort
+  nodePort: 30008
+  containerPort: 4173
+  imagePullSecrets: 
+  - dockerhub-secret
+  requests:
+    cpu: "400m"
+    memory: "400Mi"
+  limits:
+    memory: "500Mi"
+    cpu: "500m"
+  env:
+  - name: VITE_BACKEND_URL
+    valueFrom: 
+      configMapKeyRef:
+        name: kuber-config
+        key: VITE_BACKEND_URL
+backend:
+  image: sharmarjit1986/sbe
+  tag: v1
+  replicaCount: 1
+  servicePort: 5000
+  containerPort: 5000
+  serviceType: NodePort
+  nodePort: 30009
+  imagePullSecrets: 
+  - dockerhub-secret
+  requests:
+    cpu: "400m"
+    memory: "400Mi"
+  limits:
+    memory: "500Mi"
+    cpu: "500m"
+  env:
+  - name: DB_NAME
+    valueFrom: 
+      configMapKeyRef:
+        name: kuber-config
+        key: DB_NAME
+
+  - name: COLLECTION_NAME
+    valueFrom: 
+      configMapKeyRef:
+        name: kuber-config
+        key: COLLECTION_NAME
+
+  - name: PORT
+    valueFrom: 
+      configMapKeyRef:
+        name: kuber-config
+        key: PORT
+
+  - name: VITE_BACKEND_URL
+    valueFrom: 
+      configMapKeyRef:
+        name: kuber-config
+        key: VITE_BACKEND_URL
+
+  - name: MONGO_URI
+    valueFrom: 
+      secretKeyRef:
+        name: kuber-secret
+        key: MONGO_URI

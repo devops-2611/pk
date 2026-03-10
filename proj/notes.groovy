@@ -86,12 +86,23 @@ docker build --no-cache -t sharmarjit1986/sbe:v1 .
 docker push sharmarjit1986/sbe:v1
 
 
+docker rm -f sfe sbe
+docker rmi -f sharmarjit1986/sbe:v1 sharmarjit1986/sfe:v1
+
 docker build --no-cache -t sharmarjit1986/sbe:v1 /home/sharma/work/python_terra/to_gitlab/pk/proj/student-management-system/backend
 docker build --no-cache -t sharmarjit1986/sfe:v1 /home/sharma/work/python_terra/to_gitlab/pk/proj/student-management-system/frontend
 
 docker push sharmarjit1986/sbe:v1
 docker push sharmarjit1986/sfe:v1
 
+
+k delete --all all -n default
+
+k apply -f backend-deployment.yaml,backend-service.yaml,config_secret.yml,frontend-deployment.yaml,frontend-service.yaml
+
+
+kubectl port-forward svc/frontend-service 8080:4173
+kubectl port-forward svc/backend-service 5000:5000
 
 
 docker build -t sharmarjit1986/sfe:v1 .
@@ -169,3 +180,57 @@ Atlas atlas-k9svye-shard-0 [primary] stu_db> db.students.find()
 
 
 #############################################################
+
+azure key valuts
+
+service priciple:-kubervaults
+Application (client) ID: e73fb9ed-e8dc-41bb-ba58-17ac522ba68e
+Object ID: bd132f61-9434-471d-b4c7-b3e57011cc4f
+Directory (tenant) ID: 637b234b-6c6b-44fc-8606-5af9e7f38949
+
+secret value:- _iA8Q~xx5fRt07b0q602kAjiEi0TLKSv2jb4ZbeQ
+secret id:- bee670fb-aae6-44dc-85c7-43f5e6637706
+
+
+Azure key vault:-
+secret:-
+Name:- MONGO
+secret value:- mongodb+srv://sharmavishal00911_db_user:dED7Hsy5WZGWYWii@student.hi15vbh.mongodb.net/stu_db
+
+Name:- DB
+secret value:-stu_db
+
+Name:- collection
+secret value:- students
+
+Name:- PORT
+secret value:- 5000
+
+
+kubectl create secret generic 
+
+kubectl create secret generic <secret-name> \
+  --from-literal=clientid='<your-client-id>' \
+  --from-literal=clientsecret='<your-client-secret>'
+
+
+https://external-secrets.io/latest/provider/azure-key-vault/
+A service Principal client and Secret is created and the JSON keyfile is stored in a Kind=Secret. The ClientID and ClientSecret or ClientCertificate (in PEM format) should be configured for the secret. This service principal should have proper access rights to the keyvault to be managed by the operator.
+
+kubectl create secret generic kuber-secret \
+  --from-literal=ClientID="e73fb9ed-e8dc-41bb-ba58-17ac522ba68e" \
+  --from-literal=ClientSecret="_iA8Q~xx5fRt07b0q602kAjiEi0TLKSv2jb4ZbeQ"
+
+
+docker info
+docker login -u sharmarjit1986
+dckr_pat_r0FQI1Gk8Mvt97B96aI1bneQ-6g
+
+kubectl label node vishal-worker env=sbe
+
+kubectl create secret docker-registry dockerhub-secret \
+--docker-username=YOUR_USERNAME \
+--docker-password=YOUR_PASSWORD \
+--docker-email=YOUR_EMAIL
+
+kubectl create secret docker-registry dockerhub-secret --docker-username=sharmarjit1986 --docker-password=dckr_pat_r0FQI1Gk8Mvt97B96aI1bneQ-6g --docker-email=sharma.rjit@gmail.com

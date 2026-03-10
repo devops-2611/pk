@@ -1196,7 +1196,6 @@ FIELDS:
             storagePolicyID	<string>
             storagePolicyName	<string>
             volumePath	<string> -required-
-  status	<DeploymentStatus>
     availableReplicas	<integer>
     collisionCount	<integer>
     conditions	<[]DeploymentCondition>
